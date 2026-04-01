@@ -12,6 +12,16 @@
         </div>
     </section>
 
+    <section class="card" style="margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+            <img src="{{ asset('images/pathfinder-logo.png') }}" alt="Pathfinder Salemba Young Lions Logo" class="brand-logo" style="width: 92px; height: 92px;">
+            <div>
+                <div class="brand" style="font-size: 1.4rem;">Pathfinder Salemba Young Lions</div>
+                <div class="muted">Lihat profil, regu, kelas, dan perkembangan poin Anda.</div>
+            </div>
+        </div>
+    </section>
+
     <section class="grid grid-4">
         <article class="card">
             <div class="muted">Nama</div>

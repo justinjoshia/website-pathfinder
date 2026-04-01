@@ -7,8 +7,7 @@
             <p>Ringkasan admin dan daftar seluruh member.</p>
         </div>
         <div class="actions">
-            <a href="{{ route('members.create') }}" class="button">Tambah Member</a>
-            <a href="{{ route('members.index') }}" class="button secondary">Kelola Member</a>
+            <a href="{{ route('members.index') }}" class="button">Kelola Member</a>
         </div>
     </section>
 

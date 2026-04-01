@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Pathfinder Salemba Young Lions' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/pathfinder-logo.png') }}">
     <style>
         :root {
             color-scheme: light;
@@ -40,6 +41,18 @@
             padding: 16px 0;
         }
         .brand { font-size: 1.15rem; font-weight: 700; letter-spacing: 0.04em; }
+        .brand-wrap { display: flex; align-items: center; gap: 14px; }
+        .brand-text { display: grid; gap: 4px; }
+        .brand-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 1px solid var(--line);
+            background: #fff;
+            flex-shrink: 0;
+        }
         .nav { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         .nav a, .nav button {
             border: 1px solid var(--line);
@@ -156,8 +169,13 @@
         <header class="topbar">
             <div class="container topbar-inner">
                 <div>
-                    <div class="brand">Pathfinder Salemba Young Lions</div>
-                    <div class="muted">{{ auth()->user()->name }} · {{ auth()->user()->role === 'admin' ? 'Master Guide' : 'User' }}</div>
+                    <div class="brand-wrap">
+                        <img src="{{ asset('images/pathfinder-logo.png') }}" alt="Pathfinder Salemba Young Lions Logo" class="brand-logo">
+                        <div class="brand-text">
+                            <div class="brand">Pathfinder Salemba Young Lions</div>
+                            <div class="muted">{{ auth()->user()->display_identity }}</div>
+                        </div>
+                    </div>
                 </div>
                 <nav class="nav">
                     <a href="{{ route('dashboard') }}">Dashboard</a>

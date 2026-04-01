@@ -70,4 +70,18 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_USER;
     }
+
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->isAdmin()
+            ? 'MG '.$this->name
+            : $this->name;
+    }
+
+    public function getDisplayIdentityAttribute(): string
+    {
+        return $this->isAdmin()
+            ? $this->display_name.' - Master Guide'
+            : $this->display_name.' - User';
+    }
 }
