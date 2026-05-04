@@ -4,7 +4,7 @@
     <section class="page-head">
         <div>
             <h1>Dashboard Admin</h1>
-            <p>Ringkasan admin dan daftar seluruh member.</p>
+            <p>Pusat pemantauan anggota dengan tampilan ringkas, rapi, dan fokus ke data inti Pathfinder Salemba Young Lions.</p>
         </div>
         <div class="actions">
             <a href="{{ route('members.index') }}" class="button">Kelola Member</a>

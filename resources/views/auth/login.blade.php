@@ -3,10 +3,11 @@
 @section('content')
     <div class="login-shell">
         <div class="login-card">
+            <div class="app-badge">Pathfinder Access</div>
             <div class="page-head">
                 <div>
                     <h1>Login</h1>
-                    <p>Masuk sebagai Master Guide atau User.</p>
+                    <p>Masuk ke sistem poin Pathfinder dengan nuansa seragam klasik, kacu kuning, dan tampilan yang lebih bersih.</p>
                 </div>
             </div>
 
@@ -55,15 +56,15 @@
                     @enderror
                 </label>
 
-                <label>
+                <label style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <input type="checkbox" name="remember" value="1" style="width: 18px; height: 18px;">
                     <span>Ingat saya</span>
-                    <input type="checkbox" name="remember" value="1">
                 </label>
 
                 <button type="submit" class="button">Masuk</button>
             </form>
 
-            <p class="muted" style="margin-top: 20px;">Seeder default: `masterguide / password123`</p>
+            <p class="muted" style="margin-top: 22px;">Login admin default: `masterguide / 12345678`</p>
         </div>
     </div>
 

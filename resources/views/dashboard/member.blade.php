@@ -4,7 +4,7 @@
     <section class="page-head">
         <div>
             <h1>Dashboard Member</h1>
-            <p>Ringkasan profil dan histori poin pribadi.</p>
+            <p>Lihat data diri, kelas, regu, dan perkembangan poin Anda dalam satu halaman yang lebih bersih.</p>
         </div>
         <div class="actions">
             <a href="{{ route('profile') }}" class="button">Lihat Profil</a>
