@@ -1,14 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="page-head">
-        <div>
-            <h1>History Poin</h1>
-            <p>{{ $isAdmin ? 'Histori seluruh anggota.' : 'Histori poin Anda.' }}</p>
-        </div>
+    <section class="card hero-card" style="margin-bottom: 22px;">
+        <div class="hero-kicker">Point History</div>
+        <h1 class="hero-title">Riwayat Poin</h1>
+        <p class="muted" style="max-width: 720px; margin-top: 14px;">
+            {{ $isAdmin ? 'Pantau seluruh perubahan poin anggota untuk memastikan histori penilaian tetap jelas dan rapi.' : 'Lihat semua penambahan dan pengurangan poin Anda dalam satu histori yang mudah dibaca.' }}
+        </p>
     </section>
 
-    <section class="card">
+    <section class="card section-card">
+        <div class="section-head">
+            <div>
+                <h2>{{ $isAdmin ? 'Histori Seluruh Anggota' : 'Histori Poin Saya' }}</h2>
+                <p>{{ $isAdmin ? 'Daftar lengkap perubahan poin seluruh member.' : 'Daftar lengkap perubahan poin pribadi Anda.' }}</p>
+            </div>
+        </div>
         @if ($histories->isEmpty())
             <div class="empty">Belum ada histori poin.</div>
         @else
@@ -29,12 +36,12 @@
                         @foreach ($histories as $history)
                             <tr>
                                 @if ($isAdmin)
-                                    <td>{{ $history->member->user->name }}</td>
+                                    <td data-label="Member">{{ $history->member->user->name }}</td>
                                 @endif
-                                <td class="{{ $history->points > 0 ? 'points-positive' : ($history->points < 0 ? 'points-negative' : '') }}">{{ $history->points > 0 ? '+' : '' }}{{ $history->points }}</td>
-                                <td>{{ $history->description }}</td>
-                                <td>{{ $history->creator->name }}</td>
-                                <td>{{ $history->created_at->format('d M Y H:i') }}</td>
+                                <td data-label="Poin" class="{{ $history->points > 0 ? 'points-positive' : ($history->points < 0 ? 'points-negative' : '') }}">{{ $history->points > 0 ? '+' : '' }}{{ $history->points }}</td>
+                                <td data-label="Keterangan">{{ $history->description }}</td>
+                                <td data-label="Dibuat Oleh">{{ $history->creator->name }}</td>
+                                <td data-label="Waktu">{{ $history->created_at->format('d M Y H:i') }}</td>
                             </tr>
                         @endforeach
                     </tbody>

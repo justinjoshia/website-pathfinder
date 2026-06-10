@@ -61,6 +61,12 @@
         }
         .brand-wrap { display: flex; align-items: center; gap: 14px; }
         .brand-text { display: grid; gap: 4px; }
+        .brand-user {
+            color: #fff7d6;
+            font-weight: 800;
+            line-height: 1.25;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.18);
+        }
         .brand-logo {
             width: 56px;
             height: 56px;
@@ -133,7 +139,7 @@
             letter-spacing: -0.03em;
         }
         .points-low { color: #b42318; }
-        .points-mid { color: #b58105; }
+        .points-mid { color: #b68900; }
         .points-high { color: #1f6b39; }
         .points-positive { color: #1f6b39; }
         .points-negative { color: #b42318; }
@@ -244,8 +250,8 @@
         .login-shell {
             min-height: 100vh;
             display: grid;
-            place-items: center;
-            padding: 24px;
+            place-items: stretch;
+            padding: 0;
         }
         .login-card {
             width: min(540px, 100%);
@@ -288,42 +294,200 @@
 </head>
 <body>
     @auth
-        <header class="topbar">
-            <div class="container topbar-inner">
-                <div>
-                    <div class="brand-wrap">
+        @if (auth()->user()->isAdmin())
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="admin-sidebar-brand">
                         <img src="{{ asset('images/pathfinder-logo.png') }}" alt="Pathfinder Salemba Young Lions Logo" class="brand-logo">
-                        <div class="brand-text">
-                            <div class="brand">Pathfinder Salemba Young Lions</div>
-                            <div class="muted">{{ auth()->user()->display_identity }}</div>
+                        <div class="admin-sidebar-title">
+                            <strong>Pathfinder SYL</strong>
+                            <span>Admin Panel</span>
                         </div>
                     </div>
+
+                    <nav class="admin-nav">
+                        <div class="admin-nav-label">Menu Utama</div>
+                        <a href="{{ route('dashboard') }}" class="admin-side-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                            <span class="admin-side-icon">D</span>
+                            Dashboard
+                        </a>
+                        <a href="{{ route('members.index') }}" class="admin-side-link {{ request()->routeIs('members.*') ? 'active' : '' }}">
+                            <span class="admin-side-icon">M</span>
+                            Kelola Member
+                        </a>
+                        <a href="{{ route('points.index') }}" class="admin-side-link {{ request()->routeIs('points.index') ? 'active' : '' }}">
+                            <span class="admin-side-icon">H</span>
+                            History Poin
+                        </a>
+                    </nav>
+
+                    <div class="admin-sidebar-footer">
+                        <div class="admin-user-card">
+                            <strong>{{ auth()->user()->display_identity }}</strong>
+                            <span>Master Guide</span>
+                        </div>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="admin-side-button">
+                                <span class="admin-side-icon">L</span>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </aside>
+
+                <div class="admin-main">
+                    <header class="admin-header">
+                        <div class="admin-header-inner">
+                            <div class="admin-header-title">
+                                <strong>Pathfinder Salemba Young Lions</strong>
+                                <span>{{ auth()->user()->display_identity }}</span>
+                            </div>
+                            <div class="admin-mobile-brand">
+                                <div class="brand-wrap">
+                                    <img src="{{ asset('images/pathfinder-logo.png') }}" alt="Pathfinder Salemba Young Lions Logo" class="brand-logo">
+                                    <div class="brand-text">
+                                        <div class="brand">Pathfinder Salemba Young Lions</div>
+                                        <div class="brand-user">{{ auth()->user()->display_identity }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="menu-toggle" type="button" aria-label="Buka menu" aria-controls="mobile-menu" aria-expanded="false" data-menu-open>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                                    <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </header>
+
+                    <main class="admin-content">
+                        <div class="container">
+                            @if (session('status'))
+                                <div class="flash">{{ session('status') }}</div>
+                            @endif
+
+                            @yield('content')
+                        </div>
+                    </main>
                 </div>
-                <nav class="nav">
-                    <a href="{{ route('dashboard') }}">Dashboard</a>
-                    @if (auth()->user()->isAdmin())
-                        <a href="{{ route('members.index') }}">Member</a>
-                    @else
+            </div>
+        @else
+            <header class="topbar">
+                <div class="container topbar-inner">
+                    <div>
+                        <div class="brand-wrap">
+                            <img src="{{ asset('images/pathfinder-logo.png') }}" alt="Pathfinder Salemba Young Lions Logo" class="brand-logo">
+                            <div class="brand-text">
+                                <div class="brand">Pathfinder Salemba Young Lions</div>
+                                <div class="brand-user">{{ auth()->user()->display_identity }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="menu-toggle" type="button" aria-label="Buka menu" aria-controls="mobile-menu" aria-expanded="false" data-menu-open>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <nav class="nav">
+                        <a href="{{ route('dashboard') }}">Dashboard</a>
                         <a href="{{ route('profile') }}">Profil Saya</a>
+                        <a href="{{ route('points.index') }}">History Poin</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+                    </nav>
+                </div>
+            </header>
+
+            <main>
+                <div class="container">
+                    @if (session('status'))
+                        <div class="flash">{{ session('status') }}</div>
                     @endif
-                    <a href="{{ route('points.index') }}">History Poin</a>
+
+                    @yield('content')
+                </div>
+            </main>
+        @endif
+        <div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+            <button class="mobile-menu-backdrop" type="button" aria-label="Tutup menu" data-menu-close></button>
+            <aside class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Menu navigasi">
+                <div class="mobile-menu-head">
+                    <div>
+                        <div class="mobile-menu-title">Menu</div>
+                        <div class="muted">{{ auth()->user()->display_identity }}</div>
+                    </div>
+                    <button class="mobile-menu-close" type="button" aria-label="Tutup menu" data-menu-close>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+                <nav class="mobile-nav">
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                        <a href="{{ route('members.index') }}" class="{{ request()->routeIs('members.*') ? 'active' : '' }}">Kelola Member</a>
+                        <a href="{{ route('points.index') }}" class="{{ request()->routeIs('points.index') ? 'active' : '' }}">History Poin</a>
+                    @else
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                        <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'active' : '' }}">Profil Saya</a>
+                        <a href="{{ route('points.index') }}" class="{{ request()->routeIs('points.index') ? 'active' : '' }}">History Poin</a>
+                    @endif
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit">Logout</button>
                     </form>
                 </nav>
-            </div>
-        </header>
-    @endauth
-
-    <main>
-        <div class="container">
-            @if (session('status'))
-                <div class="flash">{{ session('status') }}</div>
-            @endif
-
-            @yield('content')
+            </aside>
         </div>
-    </main>
+    @else
+        <main>
+            <div class="container">
+                @if (session('status'))
+                    <div class="flash">{{ session('status') }}</div>
+                @endif
+
+                @yield('content')
+            </div>
+        </main>
+    @endauth
+    @auth
+        <script>
+            (() => {
+                const menu = document.getElementById('mobile-menu');
+                const openButton = document.querySelector('[data-menu-open]');
+                const closeButtons = document.querySelectorAll('[data-menu-close]');
+
+                if (!menu || !openButton) {
+                    return;
+                }
+
+                const setMenuState = (isOpen) => {
+                    menu.classList.toggle('is-open', isOpen);
+                    menu.setAttribute('aria-hidden', String(!isOpen));
+                    menu.inert = !isOpen;
+                    openButton.setAttribute('aria-expanded', String(isOpen));
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+
+                    if (isOpen) {
+                        menu.querySelector('[data-menu-close]')?.focus();
+                    } else {
+                        openButton.focus();
+                    }
+                };
+
+                openButton.addEventListener('click', () => setMenuState(true));
+                closeButtons.forEach((button) => {
+                    button.addEventListener('click', () => setMenuState(false));
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        setMenuState(false);
+                    }
+                });
+            })();
+        </script>
+    @endauth
 </body>
 </html>

@@ -80,8 +80,6 @@ class User extends Authenticatable
 
     public function getDisplayIdentityAttribute(): string
     {
-        return $this->isAdmin()
-            ? $this->display_name.' - Master Guide'
-            : $this->display_name.' - User';
+        return $this->display_name;
     }
 }
