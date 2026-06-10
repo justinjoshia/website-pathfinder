@@ -2,11 +2,12 @@
 
 @section('content')
     <div class="login-shell">
-        <div class="login-split">
-            <section class="login-showcase">
-                <div class="login-showcase-top">
-                    <span class="login-showcase-badge"></span>
-                    Pathfinder Salemba Young Lions
+        <div class="login-card">
+            <div class="app-badge">Pathfinder Access</div>
+            <div class="page-head">
+                <div>
+                    <h1>Login</h1>
+                    <p>Masuk ke sistem poin Pathfinder dengan nuansa seragam klasik, kacu kuning, dan tampilan yang lebih bersih.</p>
                 </div>
 
                 <div class="login-showcase-copy">
@@ -22,16 +23,10 @@
                         <h1>Login</h1>
                     </div>
 
-                    <form action="{{ route('login.store') }}" method="POST" class="grid">
-                    @csrf
-
-                        <label>
-                            Nama User
-                            <input type="text" name="name" value="{{ old('name') }}" required autofocus placeholder="Masukkan nama user">
-                            @error('name')
-                                <span class="error">{{ $message }}</span>
-                            @enderror
-                        </label>
+                <label style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <input type="checkbox" name="remember" value="1" style="width: 18px; height: 18px;">
+                    <span>Ingat saya</span>
+                </label>
 
                         <label>
                             Password
@@ -67,18 +62,7 @@
                             @enderror
                         </label>
 
-                        <div class="login-form-meta">
-                            <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--muted);">
-                                <input type="checkbox" name="remember" value="1" style="width: 18px; height: 18px;">
-                                <span>Ingat saya</span>
-                            </label>
-                            <div class="app-badge" style="margin: 0; background: rgba(31, 59, 45, 0.06);">Secure Session</div>
-                        </div>
-
-                        <button type="submit" class="button">Masuk ke Dashboard</button>
-                    </form>
-                </div>
-            </section>
+            <p class="muted" style="margin-top: 22px;">Login admin default: `masterguide / 12345678`</p>
         </div>
     </div>
 
